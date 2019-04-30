@@ -11,7 +11,6 @@ const StyledItem = styled.li`
 `;
 
 
-// renders passed string or
 const  Item = ({item, index, onClick, property, activeIndex}) =>
 	<StyledItem
 		active={index === activeIndex}

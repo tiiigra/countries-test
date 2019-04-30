@@ -38,7 +38,6 @@ class MapContainer extends React.Component {
 
 
 	render() {
-		console.log(this.props.address);
 		const {lat, lng} = this.state.location  || {lat: null, lng: null};
 		return (
 			<Container>
