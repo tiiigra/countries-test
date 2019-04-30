@@ -71,8 +71,6 @@ class Customers extends React.Component{
 			address
 		} = this.state;
 
-		console.log(this.state);
-
 		return (
 			<Container>
 				<ItemListContainer>
@@ -151,7 +149,6 @@ class Customers extends React.Component{
 		);
 		this.updateCompanies(0);
 		this.updateAddress(0);
-
 	}
 
 	updateCompanies(index) {

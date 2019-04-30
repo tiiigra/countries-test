@@ -66,7 +66,6 @@ class MapContainer extends React.Component {
 			if (data) {
 				const location = data.results.length ? data.results[0].geometry.location : null;
 				this.setState({location});
-				console.log(address);
 			}
 			if(error) {
 				this.setState({error});
