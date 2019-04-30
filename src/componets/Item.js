@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledItem = styled.li`
-	padding: 10px;
+    padding: 10px;
     background: ${props => props.active ? '#2185db' : '#fff'}
     color: ${props => props.active ? '#fff' : '#2185db'}
     border-radius: 5px;
