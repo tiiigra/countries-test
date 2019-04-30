@@ -47,49 +47,19 @@ class Customers extends React.Component{
 		const {
 			activeIndexCountries,
 			activeIndexCities,
-			activeIndexCompanies,
-			customers
+			activeIndexCompanies
 		} = this.state;
 
-		// check if state has changed
-		if (prevState.activeIndexCountries !== null && (
-			prevState.activeIndexCountries !== activeIndexCountries)) {
-
-			this.setState((state) => ({
-					cities: this.getCities(state.countries[activeIndexCountries], state.customers),
-					activeIndexCities: 0
-				})
-			);
-			this.setState((state) => ({
-					companies: this.getCompanies(state.cities[0], customers),
-					activeIndexCompanies: 0
-				})
-			);
-			this.setState((state) => ({
-					address: this.getAddress(state.companies[0])
-				})
-			);
+		if (this.stateChanged(prevState.activeIndexCountries, activeIndexCountries)) {
+			this.updateCities(activeIndexCountries);
 		}
 
-		if (prevState.activeIndexCities !== null &&
-			(prevState.activeIndexCities !== activeIndexCities)) {
-			this.setState((state) => ({
-					companies: this.getCompanies(state.cities[activeIndexCities], customers),
-					activeIndexCompanies: 0
-				})
-			);
-			this.setState((state) => ({
-					address: this.getAddress(state.companies[0])
-				})
-			);
+		if (this.stateChanged(prevState.activeIndexCities, activeIndexCities)) {
+			this.updateCompanies(activeIndexCities);
 		}
 
-		if (prevState.activeIndexCompanies !== null &&
-			(prevState.activeIndexCompanies !== activeIndexCompanies)) {
-			this.setState((state) => ({
-					address: this.getAddress(state.companies[activeIndexCompanies])
-				})
-			);
+		if (this.stateChanged(prevState.activeIndexCompanies, activeIndexCompanies)) {
+			this.updateAddress(activeIndexCompanies);
 		}
 	}
 
@@ -146,35 +116,56 @@ class Customers extends React.Component{
 		)
 	}
 
+	stateChanged(prevState, state) {
+		return prevState !== null &&prevState !== state;
+	}
+
 	onClick(i, prop) {
 		this.setState({
 			[prop]: i
 		});
 	}
 
-	// init state in chain
 	init() {
 		this.setState(() => ({
 				customers: data.Customers
 			})
 		);
+		this.updateAll();
+	}
+
+	updateAll() {
 		this.setState((state) => ({
 				countries: this.getCountries(state.customers),
 				activeIndexCountries: 0
 			})
 		);
+		this.updateCities(0);
+	}
+
+	updateCities(index) {
 		this.setState((state) => ({
-				cities: this.getCities(state.countries[0], state.customers),
+				cities: this.getCities(state.countries[index], state.customers),
 				activeIndexCities: 0
 			})
 		);
+		this.updateCompanies(0);
+		this.updateAddress(0);
+
+	}
+
+	updateCompanies(index) {
 		this.setState((state) => ({
-				companies: this.getCompanies(state.cities[0], state.customers),
+				companies: this.getCompanies(state.cities[index], state.customers),
 				activeIndexCompanies: 0
 			})
 		);
+		this.updateAddress(0);
+	}
+
+	updateAddress(index) {
 		this.setState((state) => ({
-				address: this.getAddress(state.companies[0])
+				address: this.getAddress(state.companies[index])
 			})
 		);
 	}
